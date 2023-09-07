@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'APMono';
+    src: url('/fonts/APMonoVariableVF.ttf') format('truetype');
+    /* You can include additional font formats for broader browser compatibility */
+}
+
+@font-face {
+    font-family: 'APOrienteer';
+    src: url('/fonts/OrienteerVariableVF.ttf') format('truetype');
+    /* You can include additional font formats for broader browser compatibility */
+}

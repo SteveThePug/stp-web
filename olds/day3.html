@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head> </head>
+  <body>
+    <ul class="navbar">
+      <li class="left"><a href="day2.html">Information</a></li>
+      <li class="left"><a href="day3.html">Projects</a></li>
+      <li class="right"><a href="day3.html">All Purpose</a></li>
+    </ul>
+    <div class="project-slide"></div>
+  </body>
+</html>
+
+<style>
+  body {
+    background-color: #eee;
+    width: 100vw;
+    height: 200vh;
+    margin: 0px;
+  }
+  /* ------------------------------------------------------------ */
+  /* FONTS */
+  @font-face {
+    font-family: "APMono";
+    src: url("APMonoVariableVF.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "APOrienteer";
+    src: url("OrienteerVariableVF.ttf") format("truetype");
+  }
+
+  /* ------------------------------------------------------------ */
+  /* NAVBAR */
+  .navbar {
+    position: fixed;
+    font-variation-settings: "ital" 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    width: 100vw;
+  }
+  .navbar li {
+    float: left;
+    margin: 0px 20px 20px 20px;
+    font-family: "APMono", sans-serif;
+    font-variation-settings: "ital" 0, "opsz" 0, "unkn" 0;
+  }
+  .navbar li.right {
+    float: right;
+    font-family: "APOrienteer", sans-serif;
+    font-variation-settings: "wght" 0;
+  }
+  .navbar li a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 2vw; /* Initial value */
+    transition: background-color 1s ease, font-variation-settings 1s ease-in-out;
+  }
+  .navbar li.left a:hover {
+    font-variation-settings: "ital" 20, "opsz" 10, "unkn" 70;
+  }
+  .navbar li.right a:hover {
+    font-variation-settings: "wght" 100;
+  }
+  /* ------------------------------------------------------------ */
+  /* PROJECT SLIDE */
+  .project-slide {
+    width: 100vw;
+    height: 100vh;
+  }
+  .project-slide img {
+    transition: left 10s ease;
+  }
+</style>
+<script>
+  //---------------------------------------------------------------//
+  // Slideshow
+  const slideshowElement = document.querySelector(".project-slide");
+  const width = slideshowElement.clientWidth;
+  const height = slideshowElement.clientHeight;
+  const imgElements = [];
+
+  for (let i = 1; i < 5; i++) {
+    const imgElement = document.createElement("img");
+    imgElement.src = `dump/${i}.jpg`;
+    imgElement.width = height / 2;
+    imgElement.height = height / 2;
+    imgElement.style.position = "absolute";
+    imgElement.style.left = `${width}px`;
+    imgElement.style.top = `${
+      height / 4 + ((Math.random() - 0.5) * width) / 4
+    }px`;
+    slideshowElement.appendChild(imgElement);
+    imgElements.push(imgElement);
+  }
+  imgElements.forEach((imgElement, index) => {
+    setTimeout(() => {
+      imgElement.style.transition = "left 3s ease"; // Apply a transition effect
+      imgElement.style.left = `${-height / 2}px`; // Move the image to the left
+      setTimeout(() => {
+        imgElement.remove();
+      }, 3000);
+    }, index * 1000);
+  });
+  setTimeout(() => {
+    const finalImage = document.createElement("img");
+    const finalText = document.createElement("h1");
+
+    var imgNum = 1;
+    finalImage.src = `dump/${imgNum}.jpg`;
+    finalImage.style.width = `${width / 2}px`;
+    finalImage.style.height = `${height / 2}px`;
+    finalImage.style.position = "absolute";
+    finalImage.style.transform = "translate(-50%, 0)";
+    finalImage.style.left = `${width / 2}px`;
+    finalImage.style.top = `${height / 4}px`;
+    finalImage.style.opacity = "0";
+    finalImage.style.transition = "opacity 3s ease";
+    slideshowElement.appendChild(finalImage);
+
+    const textArr = ["Hello", "How", "Are", "You", "Today"];
+    finalText.textContent = textArr[imgNum % 5];
+    finalText.style.position = "absolute";
+    finalText.style.transform = "translate(-50%, 0)";
+    finalText.style.left = `${width / 2}px`;
+    finalText.style.top = `${height / 8}px`;
+    finalText.style.opacity = "0";
+    finalText.style.transition = "opacity 3s ease";
+    slideshowElement.appendChild(finalText);
+
+    function toggleOpacity() {
+      if (finalImage.style.opacity === "1") {
+        finalImage.style.opacity = "0";
+        finalText.style.opacity = "0";
+      } else {
+        imgNum++;
+        if (imgNum % 22 == 0) imgNum = 1;
+        finalImage.src = `dump/${imgNum}.jpg`;
+        finalImage.style.opacity = "1";
+
+        finalText.textContent = textArr[imgNum % 5];
+        finalText.style.opacity = "1";
+      }
+    }
+
+    setTimeout(() => {
+      finalImage.style.opacity = "1";
+      finalText.style.opacity = "1";
+    }, 100);
+
+    setInterval(toggleOpacity, 3300);
+  }, (imgElements.length - 1) * 1000 + 3000);
+</script>
