@@ -1,5 +1,4 @@
 <template>
-  <SlidingImage />
   <Three />
 </template>
 

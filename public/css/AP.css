@@ -9,3 +9,11 @@
     src: url('/fonts/OrienteerVariableVF.ttf') format('truetype');
     /* You can include additional font formats for broader browser compatibility */
 }
+
+a,
+a:visited,
+a:hover,
+a:active {
+    color: inherit;
+    text-decoration: none;
+}

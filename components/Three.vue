@@ -43,7 +43,7 @@ gltfLoader.load('/glb/box.glb', gltf => {
     gltf.scene.scale.set(10, 10, 10);
     box = gltf.scene;
     box.rotation.y = -1.8;
-    box.position.y = - 1;
+    box.position.y = - 0.5;
     box.position.z = .2;
     scene.add(box);
 })
@@ -62,10 +62,6 @@ function updateRenderer() {
 function setRenderer() {
     if (experience.value) {
         renderer = new THREE.WebGLRenderer({ canvas: experience.value, alpha: true, powerPreference: "low-power", preserveDrawingBuffer: true, antialias: false })
-        renderer.autoClear = true;
-        renderer.autoClearDepth = true;
-        renderer.autoClearStencil = true;
-        renderer.autoClearColor = false;
     }
 }
 
