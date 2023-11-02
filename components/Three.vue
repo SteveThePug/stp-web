@@ -5,7 +5,6 @@
 canvas {
     left: 0px;
     top: 0px;
-    position: fixed;
     z-index: 0;
     overflow: hidden;
 }
@@ -14,12 +13,13 @@ canvas {
 <script setup>
 import * as THREE from 'three';
 import { onMounted, ref } from 'vue';
-import { useWindowSize } from '@vueuse/core'
+import { useElementSize, useParentElement } from '@vueuse/core'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 
 let renderer;
 const experience = ref(null);
-const { width, height } = useWindowSize()
+const parent = useParentElement(experience);
+const { width, height } = useElementSize(parent);
 const aspectRatio = computed(() => width.value / height.value)
 
 const scene = new THREE.Scene()

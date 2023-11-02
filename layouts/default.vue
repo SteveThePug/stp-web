@@ -1,4 +1,9 @@
 <template>
+    <svg v-for="(circle, index) in circles" :key="index" class="circle" width="2.5vh" height="2.5vh"
+        :style="{ animationDelay: circleDelays(index) + 's', animationDuration: duration + 's', fill: getFillColor(index) }">
+        <rect width="100%" height="100%"></rect>
+    </svg>
+
     <div class="outer navbar"></div>
     <div class="document">
         <slot />
@@ -9,10 +14,74 @@
 </template>
 
 <script>
-export default {};
+export default {
+    data() {
+        return {
+            circles: 100, // Number of circles
+            duration: 10,
+        };
+    },
+    computed: {
+    },
+    methods: {
+        circleDelays(index) {
+            // Calculate delay for each circle based on the animation duration
+            return (index / this.circles) * this.duration;
+        },
+        getFillColor(index) {
+            // Calculate fill color based on the index
+            const red = (index + 20) * 10 % 255;
+            const green = index * 20 % 255;
+            const blue = index * 25.5 % 255;
+
+            return `rgb(${red}, ${green}, ${blue})`;
+        },
+    },
+};
 </script>
-<style scoped>
-/** New css */
+
+
+<style>
+:root {
+    --right: calc(100vw - 2.5vh);
+}
+
+.circle {
+    z-index: 2;
+    position: fixed;
+    animation: circleLoop infinite;
+    animation-timing-function: linear;
+    left: 0;
+    top: 0;
+}
+
+@keyframes circleLoop {
+    0% {
+        left: 0;
+        top: 0
+    }
+
+    25% {
+        left: var(--right);
+        top: 0;
+    }
+
+    50% {
+        left: var(--right);
+        top: 97.5vh;
+    }
+
+    75% {
+        left: 0;
+        top: 97.5vh;
+    }
+
+    100% {
+        left: 0;
+        top: 0;
+    }
+}
+
 .outer {
     position: fixed;
     font-variation-settings: "ital" 0;
@@ -21,47 +90,49 @@ export default {};
     padding: 0;
     overflow: hidden;
     z-index: 1;
-    background-image: url("img/squares.gif");
+    background-color: aqua;
     background-repeat: repeat;
-    background-size: 5vw;
+    background-size: 10vw;
 }
 
 .navbar {
     left: 0vw;
     top: 0vh;
     width: 100vw;
-    height: 10vh;
-    clip-path: polygon(0% 0%, 100% 0%, 100% 50%, 10% 50%, 5% 100%, 0% 100%);
+    height: 5vh;
+    clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 2.5vh, 5vh 2.5vh, 2.5vh 5vh, 0vw 5vh);
 }
 
 .bar-leftbox {
     left: 0vw;
-    top: 10vh;
-    height: 90vh;
-    width: 5vw;
+    top: 5vh;
+    height: 92.5vh;
+    width: 2.5vh;
 }
 
 .bar-rightbox {
-    left: 95vw;
-    top: 5vh;
-    height: 95vh;
-    width: 5vw;
+    left: calc(100vw - 2.5vh);
+    top: 2.5vh;
+    height: 92.5vh;
+    width: 2.5vh;
 }
 
 .bar-footer {
-    left: 5vw;
+    left: 0vw;
     top: 95vh;
     height: 5vh;
-    width: 90vw;
+    width: 100vw;
+    clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 2.5vh, 5vh 2.5vh, 2.5vh 5vh, 0vw 5vh);
+    transform: rotate(180deg);
 }
-
 
 .document {
     position: fixed;
-    left: 10vw;
-    top: 10vw;
-    right: 90vw;
-    bottom: 90vw;
+    left: 2.5vh;
+    top: 2.5vh;
+    width: calc(100vw - 5vh);
+    height: 95vh;
+    overflow-y: scroll;
 }
 
 
